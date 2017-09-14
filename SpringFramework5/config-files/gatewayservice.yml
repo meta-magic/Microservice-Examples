@@ -1,0 +1,21 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring:application:instance_id:${server.port}}}
+    prefer-ip-address: true
+server:
+  port: 8080
+spring:
+  application:
+    name: gatewayservice
+zuul:
+  ignored-services: '*'
+  prefix: /api
+  routes:
+    springjdoservice:
+      path: /jdo/**
+      serviceId: SPRINGJDOSERVICE
